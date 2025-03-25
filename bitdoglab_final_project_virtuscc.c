@@ -14,6 +14,14 @@
 
 void testa_led_por_index();
 
+void botao_a_interrupcao(uint gpio, uint32_t events) {
+    printf("BUTAO A PRESSIONADO\n\n");
+}
+
+void botao_b_interrupcao(uint gpio, uint32_t events) {
+    printf("BUTAO B PRESSIONADO\n\n");
+}
+
 int main()
 {
     stdio_init_all();
@@ -27,6 +35,9 @@ int main()
     gpio_init(LED);
     gpio_set_dir(LED, GPIO_OUT);
     gpio_put(LED, 0);
+
+    button_register_callback(BOTAO_A, BUTTON_A, GPIO_IRQ_EDGE_FALL, &botao_a_interrupcao); 
+    button_register_callback(BOTAO_B, BUTTON_B, GPIO_IRQ_EDGE_FALL, &botao_b_interrupcao); 
 
     Buzzer buzzer;
     buzzer_init(&buzzer, 21, 1000);
