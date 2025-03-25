@@ -42,6 +42,7 @@
         "pico_led_matrix_lib.h": "c",
         "ws2818bpio.h": "c",
         "clocks.h": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "stdlib.h": "c"
     }
 }

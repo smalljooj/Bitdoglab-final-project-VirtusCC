@@ -19,7 +19,7 @@ void init_joystick() {
     gpio_set_dir(SW, GPIO_IN); // Configura o pino como entrada
     gpio_pull_up(SW); // Habilita o resistor pull-up (botão em nível alto quando solto)
     // Configura a interrupção para detectar a borda de subida (botão solto)
-    gpio_set_irq_enabled_with_callback(SW, GPIO_IRQ_EDGE_RISE, true, &botao_interrupcao);
+    //gpio_set_irq_enabled_with_callback(SW, GPIO_IRQ_EDGE_RISE, true, &botaoJS_interrupcao);
 }
 
 // Captura os valores atuais do joystick
@@ -38,16 +38,6 @@ void inplicit_read_joystick(uint16_t *eixo_x, uint16_t *eixo_y, uint8_t *botao_j
     *eixo_y = adc_read(); // Lê o valor do eixo Y
 
     *botao_j = gpio_get(SW); // Lê o estado do botão
-}
-
-
-// Função de callback para a interrupção do botão
-void botao_interrupcao(uint gpio, uint32_t events) {
-    if (gpio == SW) { // Verifica se a interrupção ocorreu no pino do botão
-        if (events & GPIO_IRQ_EDGE_RISE) { // Verifica se foi uma borda de subida (botão solto)
-            printf("Botao apertado!\n");
-        }
-    }
 }
 
 

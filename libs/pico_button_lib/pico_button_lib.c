@@ -17,6 +17,7 @@ void button_init(uint gpio, button_mode_t mode) {
     } else {
         gpio_pull_down(gpio);
     }
+    gpio_set_irq_enabled_with_callback(gpio, GPIO_IRQ_EDGE_RISE, true, &botao_interrupcao);
 }
 
 bool button_read(uint gpio) {
@@ -62,6 +63,16 @@ bool button_pressed_for(uint gpio, uint32_t duration_ms) {
     return false;
 }
 
+void botao_interrupcao(uint gpio, uint32_t events) {
+    if (gpio == BOTAO_A) {
+        printf("BUTAO A PRESSIONADO\n\n");
+    }
+    else if (gpio == BOTAO_B){
+        printf("BUTAO B PRESSIONADO\n\n");
+    }
+}
+
+/*
 void button_callback_internal(uint gpio, uint32_t events) {
     static uint32_t last_state_time_A = 0, last_state_time_B = 0;
     static bool last_state_A = true, last_state_B = true;
@@ -69,7 +80,7 @@ void button_callback_internal(uint gpio, uint32_t events) {
     bool estado_atual = !button_read(gpio);
     uint32_t now = to_ms_since_boot(get_absolute_time());
 
-    // **BOTÃO A**
+    // BOTÃO A**
     if (gpio == botao_A) {
         if (estado_atual != last_state_A) {
             if (now - last_state_time_A > DEBOUNCE_TIME_MS) {
@@ -85,7 +96,7 @@ void button_callback_internal(uint gpio, uint32_t events) {
         }
     }
 
-    // **BOTÃO B**
+    // BOTÃO B**
     if (gpio == botao_B) {
         if (estado_atual != last_state_B) {
             if (now - last_state_time_B > DEBOUNCE_TIME_MS) {
@@ -103,7 +114,7 @@ void button_callback_internal(uint gpio, uint32_t events) {
 }
 
 
-// **Função para registrar um callback com debounce embutido**
+// Função para registrar um callback com debounce embutido**
 void button_register_callback(uint gpio, uint32_t events, void (*callback)(uint, uint32_t)) {
     if (botao_A == 0) {  
         botao_A = gpio;
@@ -113,6 +124,6 @@ void button_register_callback(uint gpio, uint32_t events, void (*callback)(uint,
         callback_B = callback;
     }
 
-    // **Registrar sempre ambos os eventos (EDGE_FALL e EDGE_RISE)**
+    // Registrar sempre ambos os eventos (EDGE_FALL e EDGE_RISE)
     gpio_set_irq_enabled_with_callback(gpio, GPIO_IRQ_EDGE_FALL | GPIO_IRQ_EDGE_RISE, true, &button_callback_internal);
-}
+}*/

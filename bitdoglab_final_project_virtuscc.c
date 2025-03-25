@@ -8,7 +8,8 @@
 
 #define SLEEP_TEST 500
 
-#define BUTTON 5
+#define BOTAO_A  5
+#define BOTAO_B  6
 #define LED 12
 
 void testa_led_por_index();
@@ -21,7 +22,8 @@ int main()
 
     init_joystick();
     
-    button_init(BUTTON, PULLUP);
+    button_init(BOTAO_A, PULLUP);
+    button_init(BOTAO_B, PULLUP);
     gpio_init(LED);
     gpio_set_dir(LED, GPIO_OUT);
     gpio_put(LED, 0);
@@ -32,7 +34,7 @@ int main()
     printf("Emitindo beep...\n");
     //buzzer_beep(&buzzer, 500, 500);
 
-    testa_led_por_index();
+    //testa_led_por_index();
 
     uint16_t notes[] = {262, 294, 330, 349, 440, 494, 523};
 
@@ -65,12 +67,12 @@ int main()
     };
 
     while (true) {
-
+        /*
         for(int i = 0; i < 27; i++)
         {
             buzzer_set_frequency(&buzzer, frequencies[i]);
             sleep_ms(durations[i]);
-        }
+        }*/
 
         joystick_captura();
         normalizar_joystick();
