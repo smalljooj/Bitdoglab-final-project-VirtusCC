@@ -50,11 +50,13 @@ target_link_libraries(bitdoglab_final_project_virtuscc
         pico_button_lib
         pico_buzzer_lib
         pico_led_matrix_lib
+        joystick_lib
 )
 
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/libs/pico_button_lib)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/libs/pico_buzzer_lib)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/libs/pico_led_matrix_lib)
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/libs/joystick_lib)
 
 # Add the standard include files to the build
 target_include_directories(bitdoglab_final_project_virtuscc PRIVATE
@@ -62,6 +64,7 @@ target_include_directories(bitdoglab_final_project_virtuscc PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}/libs/pico_button_lib/inc/
         ${CMAKE_CURRENT_LIST_DIR}/libs/pico_buzzer_lib/inc/
         ${CMAKE_CURRENT_LIST_DIR}/libs/pico_led_matrix_lib/inc/
+        ${CMAKE_CURRENT_LIST_DIR}/libs/joystick_lib/inc/
 )
 
 # Add any user requested libraries
