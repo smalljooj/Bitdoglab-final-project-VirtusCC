@@ -34,6 +34,10 @@ typedef struct pixel_t {
     uint8_t blue;
 } Pixel;
 
+
+// Cor tema (R, G, B)
+extern uint8_t tema_cor[3];
+
 /*
 extern PIO np_pio;
 extern uint sm;
@@ -60,5 +64,14 @@ void init(uint8_t pin);
 
 // envia os dados referentes a cada pixel para o componente
 void matrix_write();
+
+
+// Função para exibir sprites na matriz de LEDs
+// Parâmetros:
+// - sprite: Matriz 5x5x3 contendo os valores de cor (R, G, B) para cada LED
+void display_sprite(const int sprite[5][5][3]);
+
+
+void set_led_state(uint8_t index, uint8_t intensidade);
 
 #endif

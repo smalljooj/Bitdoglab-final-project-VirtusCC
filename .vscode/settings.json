@@ -35,5 +35,13 @@
     "raspberry-pi-pico.cmakeAutoConfigure": true,
     "raspberry-pi-pico.useCmakeTools": false,
     "raspberry-pi-pico.cmakePath": "${HOME}/.pico-sdk/cmake/v3.31.5/bin/cmake",
-    "raspberry-pi-pico.ninjaPath": "${HOME}/.pico-sdk/ninja/v1.12.1/ninja"
+    "raspberry-pi-pico.ninjaPath": "${HOME}/.pico-sdk/ninja/v1.12.1/ninja",
+    "files.associations": {
+        "*.embeddedhtml": "html",
+        "pio.h": "c",
+        "pico_led_matrix_lib.h": "c",
+        "ws2818bpio.h": "c",
+        "clocks.h": "c",
+        "stdint.h": "c"
+    }
 }

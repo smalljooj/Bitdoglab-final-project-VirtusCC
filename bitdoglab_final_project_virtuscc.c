@@ -21,6 +21,7 @@ int main()
 
     init_joystick();
 
+    
     button_init(BUTTON, PULLUP);
     gpio_init(LED);
     gpio_set_dir(LED, GPIO_OUT);
@@ -30,17 +31,17 @@ int main()
     buzzer_init(&buzzer, 21, 1000);
 
     printf("Emitindo beep...\n");
-    //buzzer_beep(&buzzer, 500, 500);
+    buzzer_beep(&buzzer, 500, 500);
 
-    //testa_led_por_index();
+    testa_led_por_index();
 
     while (true) {
         joystick_captura();
         normalizar_joystick();
-        npClear();
-        npWrite(); // Escreve os dados nos LEDs.
+        clear();
+        matrix_write(); // Escreve os dados nos LEDs.
         sleep_ms(1);
-
+        
         switch (get_direcao()) {
             // Direções principais
             case CIMA1: display_sprite(cima1); break;
@@ -64,7 +65,7 @@ int main()
         
             case NEUTRO: display_sprite(neutro); break;
         }
-        npWrite();
+        
     }
 }
 

@@ -8,12 +8,14 @@
 PIO np_pio;
 uint sm;
 Pixel matrix[LED_COUNT];
+uint8_t tema_cor[3] = {255, 0, 0}; // Verde (R=255, G=0, B=0)
 
 int get_index(uint8_t x, uint8_t y) {
-    // funcao para achar o indice na lista baseado nas coordenadas
-    if (x % 2 == 0)
-        return 4 + 5*x - y;
-    else return 5*x + y;
+    if (y % 2 == 0) {
+        return 24 - (y * 5 + x); // Linhas pares: esquerda para direita
+    } else {
+        return 24 - (y * 5 + (4 - x)); // Linhas ímpares: direita para esquerda
+    }
 }
 
 void set_color_by_index(uint8_t index, uint8_t red, uint8_t green, uint8_t blue) {
@@ -25,6 +27,12 @@ void set_color_by_index(uint8_t index, uint8_t red, uint8_t green, uint8_t blue)
     pixel->blue = blue;
 
     sleep_ms(DELAY_MS);
+}
+
+void set_led_state(uint8_t index, uint8_t intensidade) {
+    matrix[index].red = (tema_cor[0] * intensidade) / 255;
+    matrix[index].green = (tema_cor[1] * intensidade) / 255;
+    matrix[index].blue = (tema_cor[2] * intensidade) / 255;
 }
 
 void set_color_by_xy(uint8_t x, uint8_t y, uint8_t red, uint8_t green, uint8_t blue) {
@@ -91,4 +99,17 @@ void set_color_by_line(uint8_t line, uint8_t red, uint8_t green, uint8_t blue) {
         // define a cor do pixel na posição (linha = line, coluna = i)
         set_color_by_xy(line, i, red, green, blue);
     }
+}
+
+
+// Exibe um sprite na matriz de LEDs
+void display_sprite(const int sprite[5][5][3]) {
+    for (int linha = 0; linha < 5; linha++) {
+        for (int coluna = 0; coluna < 5; coluna++) {
+            int posicao = get_index(linha, coluna);
+            uint8_t intensidade = sprite[coluna][linha][0]; // Assume que o sprite usa o primeiro valor para intensidade
+            set_led_state(posicao, intensidade);
+        }
+    }
+    matrix_write();
 }
