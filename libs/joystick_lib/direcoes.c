@@ -6,37 +6,37 @@ Direcao get_direcao() {
   
     // Diagonais (prioridade máxima)
     if (x >= 25 && y >= 25) {
-        if (x > 75 || y > 75) return DIAG_CIMA_DIREITA2;
+        if (x > 95 || y > 95) return DIAG_CIMA_DIREITA2;
         else return DIAG_CIMA_DIREITA1;
     }
     if (x >= 25 && y <= -25) {
-        if (x > 75 || y < -75) return DIAG_CIMA_ESQUERDA2;
+        if (x > 95 || y < -95) return DIAG_CIMA_ESQUERDA2;
         else return DIAG_CIMA_ESQUERDA1;
     }
     if (x <= -25 && y >= 25) {
-        if (x < -75 || y > 75) return DIAG_BAIXO_DIREITA2;
+        if (x < -95 || y > 95) return DIAG_BAIXO_DIREITA2;
         else return DIAG_BAIXO_DIREITA1;
     }
     if (x <= -25 && y <= -25) {
-        if (x < -75 || y < -75) return DIAG_BAIXO_ESQUERDA2;
+        if (x < -95 || y < -95) return DIAG_BAIXO_ESQUERDA2;
         else return DIAG_BAIXO_ESQUERDA1;
     }
   
     // Direções principais (eixos individuais)
     if (x >= 25) {
-        if (x > 75) return CIMA2;
+        if (x > 95) return CIMA2;
         else return CIMA1;
     }
     if (x <= -25) {
-        if (x < -75) return BAIXO2;
+        if (x < -95) return BAIXO2;
         else return BAIXO1;
     }
     if (y >= 25) {
-        if (y > 75) return DIREITA2;
+        if (y > 95) return DIREITA2;
         else return DIREITA1;
     }
     if (y <= -25) {
-        if (y < -75) return ESQUERDA2;
+        if (y < -95) return ESQUERDA2;
         else return ESQUERDA1;
     }
   
