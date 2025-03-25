@@ -20,7 +20,6 @@ int main()
     init(INPUT_PIN);
 
     init_joystick();
-
     
     button_init(BUTTON, PULLUP);
     gpio_init(LED);
@@ -31,11 +30,48 @@ int main()
     buzzer_init(&buzzer, 21, 1000);
 
     printf("Emitindo beep...\n");
-    buzzer_beep(&buzzer, 500, 500);
+    //buzzer_beep(&buzzer, 500, 500);
 
     testa_led_por_index();
 
+    uint16_t notes[] = {262, 294, 330, 349, 440, 494, 523};
+
+    // Frequências em Hz (valores arredondados)
+    const uint16_t frequencies[] = {
+        392, 392, 392,   // "We wish you"
+        330, 523, 494,    // "a merry Christ-"
+        440, 392,         // "-mas"
+        392, 392, 392,    // "We wish you"
+        330, 523, 494,    // "a merry Christ-"
+        440, 392,         // "-mas"
+        392, 392, 440,    // "We wish you"
+        349, 330, 294,    // "a merry"
+        523, 523, 494,    // "Christ-mas"
+        440, 392          // "and a happy new year!"
+    };
+
+    // Durações em milissegundos (ms)
+    const uint16_t durations[] = {
+        400, 400, 400,    // "We wish you"
+        800, 400, 400,    // "a merry Christ-"
+        800, 800,         // "-mas"
+        400, 400, 400,    // "We wish you"
+        800, 400, 400,    // "a merry Christ-"
+        800, 800,         // "-mas"
+        400, 400, 400,    // "We wish you"
+        800, 800, 800,    // "a merry"
+        1200, 400, 400,   // "Christ-mas"
+        800, 1000         // "and a happy new year!"
+    };
+
     while (true) {
+
+        for(int i = 0; i < 27; i++)
+        {
+            buzzer_set_frequency(&buzzer, frequencies[i]);
+            sleep_ms(durations[i]);
+        }
+
         joystick_captura();
         normalizar_joystick();
         clear();
