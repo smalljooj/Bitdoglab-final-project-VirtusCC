@@ -11,7 +11,6 @@ static void (*callback_B)(uint, uint32_t) = NULL;
 static bool estado_anterior_A = true;
 static bool estado_anterior_B = true;
 
-
 void button_init(uint gpio, button_mode_t mode) {
     gpio_init(gpio);
     gpio_set_dir(gpio, GPIO_IN);

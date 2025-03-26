@@ -47,15 +47,16 @@ void buzzer_init(Buzzer *buzzer, uint pin, uint freq) {
 // ===========================
 //    Controle de Frequência
 // ===========================
+/**
+ * @brief faltou o pwm_set_wrap
+ */
 void buzzer_set_frequency(Buzzer *buzzer, uint frequency) {
     uint slice_num = pwm_gpio_to_slice_num(buzzer->pin);
-    /*
-    
-    buzzer->frequency = frequency;
-    */
-
     pwm_set_clkdiv(slice_num, clock_get_hz(clk_sys) / (frequency * 4096));
+
+    // Adicionado -----
     pwm_set_wrap(slice_num, 4095);
+    // --------
 
     pwm_set_gpio_level(buzzer->pin, 2048); 
     buzzer->frequency = frequency;

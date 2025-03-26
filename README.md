@@ -8,8 +8,19 @@
 - [Antonio Roberto](https://github.com/antoniojunior2222)
 - [Ismael Marinho](https://github.com/smalljooj)
 
-Este projeto foi desenvolvido no intuito de testas as bibliotecas disponibilizadas, e verificar suas funções 
-e viabilidade de uso.
+Este trabalho teve como objetivo validar a funcionalidade e viabilidade de bibliotecas de desenvolvimento para hardware embarcado, por meio da implementação de um sistema integrado que combina entrada analógica, saída visual e sonora. A proposta central consiste em um dispositivo interativo que mapeia posições de um joystick para notas musicais, com as seguintes funcionalidades-chave:
+
+- Conversão Direcional-Sonora:
+Translada movimentos do joystick em frequências sonoras específicas (escala musical temperada), permitindo a composição de melodias.
+
+- Feedback Visual em Tempo Real:
+Utiliza uma matriz de LEDs para exibir sprites que representam graficamente a direção do joystick (e.g., cima, baixo, diagonais).
+
+- Seleção de Notas por Atuador:
+Um botão físico confirma a nota associada à posição atual do joystick, habilitando a criação sequencial de arranjos musicais.
+
+- Modo Demonstração Automática:
+Reproduz uma sequência pré-programada de animações e sons, inspirada em trilhas retro de consoles 8-bit (e.g., chiptune), para validação do subsistema multimídia.
 
 ## Montagem do Projeto
 ![Placa1](images/Placa_up.png)
@@ -38,97 +49,125 @@ e viabilidade de uso.
   - GPIO 5
   - GPIO 6
 
+## Bibliotecas Utilizadas
+
+- **Buzzer**: 
+    - Autor: Pedro Augusto Gonçalves Lucena 
+    - [Link](https://github.com/pedrodev3005/pico-buzzer-lib)
+- **Matriz de Led**: 
+    - Autor:  Francisco Bezerra Da Silva Neto 
+    - [Link](https://github.com/Chico0212/pico-led-matrix-lib/tree/main)
+- **Botões**:
+    - Autor: Pedro Augusto Gonçalves Lucena
+    - [Link](https://github.com/pedrodev3005/pico-button-lib)
+
+As bibliotecas foram renomeadas para os nomes descritos no github, separadas e colocadas na pasta lib, com
+CMakeLists separados, para serem adicionadas como dependências separadas.
+
 ## Funções utilizadas 
 
-## Biblioteca do buzzer(`pico_buzzer_lib`)
+### Biblioteca do buzzer(`pico_buzzer_lib`)
 
 A biblioteca `pico_buzzer_lib` gerencia a inicialização e configuração do buzzer, em relação a frequência e volume. 
 
 1. **` void buzzer_init(Buzzer *buzzer, uint pin, uint freq) `**
-   - Validação da Frequência
-   - Configuração da Estrutura `Buzzer`
-   - Configuração do GPIO
-   - Configuração do PWM
-   - Inicialização do Nível do PWM
+    - Validação da Frequência
+    - Configuração da Estrutura `Buzzer`
+    - Configuração do GPIO
+    - Configuração do PWM
+    - Inicialização do Nível do PWM
 
-2. **`float read_mic()`**
-   - Captura uma única amostra de áudio
-   - Retorna valor normalizado [-1.0, 1.0]
+2. **` void buzzer_set_frequency(Buzzer *buzzer, uint frequency) `**
+    - Identificação do "Slice" PWM
+    - Atualização da Frequência do PWM
+    - Configuração do Ciclo de Trabalho
+    - Atualização da Frequência na Estrutura
 
-3. **`void record_mic(uint16_t seconds)`**
-   - Grava áudio por tempo especificado
-   - Armazena amostras em buffer alocado dinamicamente
-
-4. **`float* get_samples_mic()`**
-   - Retorna ponteiro para o buffer de amostras
-
-5. **`void calculate_offset()`**
-   - Calibra o offset DC.
-
-6. **`void deinit_mic()`**
-   - Libera memória do buffer de áudio
+3. **` void buzzer_set_volume(Buzzer *buzzer, uint volume)  `**
+    - Limitação do Valor de Volume
+    - Cálculo do Nível PWM
+    - Aplicação do Novo Nível
 
 ---
 
-### **Biblioteca da Matriz de LED (`malha_led`)**
+### Biblioteca da Matriz de LED (`pico_led_matrix_lib`)
 
-A biblioteca `malha_led` controla uma matriz de LED 5x5, permitindo a exibição de sprites e a alteração dinâmica das cores.
+A biblioteca `pico_led_matrix_lib` controla uma matriz de LED 5x5, permitindo a exibição de sprites e a alteração dinâmica das cores.
 
-#### Funções Principais:
+1. **` void init(uint8_t pin) `**
+    - Inicializa a matriz de LED, configurando o PIO e a máquina de estados.
+    - **Detalhes**:
+    - Configura o pino para controle dos LEDs NeoPixel.
 
-1. **`void npInit()`**
-   - **Descrição**: Inicializa a matriz de LED, configurando o PIO e a máquina de estados.
-   - **Detalhes**:
-     - Configura o pino 7 para controle dos LEDs NeoPixel.
-     - Inicializa o buffer de pixels com todas as cores definidas como preto.
-
-2. **`void npSetLED(uint index, uint8_t intensidade)`**
-   - **Descrição**: Define a cor de um LED específico na matriz.
-   - **Parâmetros**:
-     - `index`: Índice do LED (0 a 24).
-     - `intensidade`: Intensidade do LED (0-255), que é multiplicada pela cor tema.
-
-3. **`void npClear()`**
-   - **Descrição**: Limpa a matriz de LED, definindo todas as cores como preto.
-   - **Detalhes**:
-     - Útil para reiniciar a exibição antes de desenhar um novo sprite.
-
-4. **`void npWrite()`**
-   - **Descrição**: Envia os dados do buffer de pixels para os LEDs.
-   - **Detalhes**:
-     - Deve ser chamada após definir as cores dos LEDs para atualizar a matriz.
+2. **` void matrix_write() `**
+    - Envia os dados do buffer de pixels para os LEDs.
+    - **Detalhes**:
+    - Deve ser chamada após definir as cores dos LEDs para atualizar a matriz.
 
 5. **`void display_sprite(const int sprite[5][5][3])`**
-   - **Descrição**: Exibe um sprite na matriz de LED.
-   - **Parâmetros**:
-     - `sprite`: Matriz 5x5x3 contendo os valores de intensidade para cada LED.
+    - Exibe um sprite na matriz de LED.
+    - **Detalhes**:
+    - `sprite`: Matriz 5x5x3 contendo os valores de intensidade para cada LED.
 
-6. **`int getIndex(int x, int y)`**
-   - **Descrição**: Converte coordenadas (x, y) em um índice linear.
-   - **Retorno**: Índice linear correspondente (0 a 24).
+
+### Biblioteca do Botão (`pico_button_lib`)
+
+A biblioteca `pico_button_lib` gerencia a inicialização, configuração dos botões e criação dos callbacks.  
+
+1. **` void buzzer_init(Buzzer *buzzer, uint pin, uint freq) `**
+    - Configura o GPIO como entrada 
+    - Configura o pino como Pull UP ou Pull Down
+
+5. **`void button_register_callback(uint gpio, select_button button, enum gpio_irq_level irq_level,void (*callback)(uint, uint32_t)) `**
+    - Guarda um ponteiro para a função de callback que será executada dependendo do botão.
+    - Registra a função interna de callback, já com debounce
+    
+3. **` void button_callback_internal(uint gpio, uint32_t events) `**
+    - Identificação do Botão
+    - Debounce por Tempo
+    - Atualização do Timestamp
+    - Validação do Evento
+    - Execução do Callback
 
 ---
 
-## Funções de Teste Implementadas
+## Código Principal
 
+## Funções Implementadas
 
-## Funções Implementadas no `main`
+### 1. **`main()`**
+- **Propósito:** Configurar e gerenciar o fluxo principal do programa.
+- **Ações:**
+  - Inicializa periféricos: GPIO, joystick, buzzer, botões.
+  - Registra callbacks para os botões A e B (`button_register_callback`).
+  - Loop principal:
+    - Captura e normaliza dados do joystick.
+    - Atualiza a matriz de LEDs com sprites baseados na direção do joystick.
+    - Controla a frequência do buzzer conforme o estado da variável `notas` para que soem como notas musicais.
 
-O arquivo main.c é o ponto de entrada do projeto. Ele integra as bibliotecas do microfone e da matriz de LED, implementando a lógica principal do projeto.
+---
 
-### **Lógica Principal**
+### 2. **`botao_a_interrupcao()`**
+- **Propósito:** Callback para o botão A (GPIO 5).
+- **Comportamento:**
+  - Ativa o modo de demonstração (`demo = 1`).
 
-1. O nível de áudio é lido continuamente.
+---
 
-2. A matriz de LED é atualizada para exibir sprites com base na intensidade sonora.
+### 3. **`botao_b_interrupcao()`**
+- **Propósito:** Callback para o botão B (GPIO 6).
+- **Comportamento:**
+  - Mapeia a direção atual do joystick (via `get_direcao()`) para notas musicais:
+    - Exemplo: Direção `CIMA2` → Nota Dó (`DO`).
 
-3. Controle de Sprites:
-    - Níveis de som baixos exibem um sprite de "silêncio".
-    - Níveis médios exibem um sprite "padrão".
-    - Níveis altos exibem um sprite "explosivo".
+---
 
-4. Atualização da Matriz:
-    - Após definir o sprite, a função npWrite() é chamada para atualizar a matriz de LED.
+### 4. **`demonstracao()`**
+- **Propósito:** Executar uma sequência pré-definida de animações e sons.
+- **Etapas:**
+  1. Atualiza cores e sprites na matriz de LEDs.
+  2. Toca notas musicais sequenciais (de Dó a Dó2).
+  3. Finaliza com animação especial (`final1/final2`).
 
 ---
 
@@ -152,9 +191,41 @@ O arquivo main.c é o ponto de entrada do projeto. Ele integra as bibliotecas do
 
 ---
 
-## Conclusão
+## Considerações finais
 
-Este projeto demonstra a integração de um microfone com uma matriz de LED, permitindo a visualização dinâmica dos níveis de áudio em tempo real. Possíveis melhorias incluem a adição de filtros de áudio, suporte a mais efeitos visuais e a integração de outros sensores.
+Não foi possível criar o projeto apenas com o código disponibilizado devido a erros, falta de implementações e ajustes necessários para melhorar o funcionamento das bibliotecas. A seguir, são detalhados os principais pontos observados:
+
+### Botões
+
+A biblioteca carece de documentação adequada para as funções implementadas. No entanto, os problemas mais relevantes foram identificados na definição dos botões e na atribuição de seus respectivos callbacks. As principais dificuldades encontradas foram:
+
+- O funcionamento da inicialização (init) é genérico e pode ser utilizado para qualquer GPIO na placa. No entanto, a função de callback não segue essa mesma lógica, exigindo que o botão seja especificamente o Botão A ou Botão B.
+
+- A função que define os callbacks estava confusa e não permitia uma configuração clara. Para manter a proposta original da biblioteca, foi adicionada uma nova estrutura que permite ao usuário definir qual dos dois botões deseja configurar com um callback específico.
+
+- A implementação original tornava obrigatório o uso de interrupções nos eventos RISE e FALL do botão, o que levava a uma chamada desnecessária da rotina de interrupção para verificar se o estado atual era diferente do anterior.
+
+Dessa forma, foi criada uma nova função para configuração dos callbacks:
+
+`button_register_callback(uint gpio, select_button button, enum gpio_irq_level irq_level,void (*callback)(uint, uint32_t))` 
+
+Os parâmetros dessa função são:
+
+- gpio: Define o GPIO utilizado (mantido como argumento para preservar a lógica original).
+
+- button: Define qual botão está sendo configurado (BUTTON_A ou BUTTON_B).
+
+- irq_level: Define o tipo de interrupção (FALL ou RISE).
+
+- callback: Define a função de callback associada ao botão.
+
+### Matriz de Led
+
+### Buzzer
+
+Houve falhas na funcionalidade de tocar melodias, o que levou à necessidade de implementar um novo método próprio para essa função. Além disso, foi 
+identificada a ausência de uma chamada à função `pwm_set_wrap`, o que prejudicava a precisão do som gerado.  
+Outro problema encontrado foi no controle de volume, que apenas funcionava corretamente para a opção mute, sem permitir ajustes intermediários.
 
 ---
 
@@ -162,3 +233,6 @@ Este projeto demonstra a integração de um microfone com uma matriz de LED, per
 
 - [Raspberry Pi Pico SDK](https://github.com/raspberrypi/pico-sdk)
 - [Biblioteca NeoPixel para Pico](https://github.com/raspberrypi/pico-examples/tree/master/pio/ws2812)
+- [Biblioteca do Buzzer](https://github.com/pedrodev3005/pico-buzzer-lib)
+- [Biblioteca da Matriz de Led](https://github.com/Chico0212/pico-led-matrix-lib/tree/main)
+- [Biblioteca dos Botões](https://github.com/pedrodev3005/pico-button-lib)
