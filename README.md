@@ -190,7 +190,11 @@ A biblioteca `pico_button_lib` gerencia a inicialização, configuração dos bo
    - Fale ou coloque um som próximo ao microfone.
 
 ---
+## Demonstração
 
+![Demonstração](/images/gif_projeto.gif)
+![Funcionalidade](/images/func_som.gif)
+---
 ## Considerações finais
 
 Não foi possível criar o projeto apenas com o código disponibilizado devido a erros, falta de implementações e ajustes necessários para melhorar o funcionamento das bibliotecas. A seguir, são detalhados os principais pontos observados:
