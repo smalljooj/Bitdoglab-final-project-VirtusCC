@@ -194,6 +194,9 @@ A biblioteca `pico_button_lib` gerencia a inicialização, configuração dos bo
 
 ![Demonstração](/images/gif_projeto.gif)
 ![Funcionalidade](/images/func_som.gif)
+
+
+### OBS: Se desejar ver os videos demonstrativos, basta baixa-los na pasta images.
 ---
 ## Considerações finais
 
