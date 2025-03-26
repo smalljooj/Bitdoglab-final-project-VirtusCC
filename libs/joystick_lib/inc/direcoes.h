@@ -28,6 +28,19 @@ typedef enum {
   NEUTRO          // Posição neutra
 } Direcao;
 
+
+typedef enum {
+  DO,
+  RE,
+  MI,
+  FA,
+  SOL,
+  LA,
+  SI,
+  DO2,
+  MUTE          // Posição neutra
+} Nota;
+
 // Protótipos de funções
 Direcao get_direcao();
 

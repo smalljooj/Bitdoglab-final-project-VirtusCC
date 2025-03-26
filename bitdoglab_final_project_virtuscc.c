@@ -12,11 +12,13 @@
 #define BOTAO_B  6
 #define LED 12
 
+Nota notas = NEUTRO;
+Buzzer buzzer;
+uint16_t notes[] = {262, 294, 330, 349, 392, 440, 494, 523};
+
 void testa_led_por_index();
 
-void botao_a_interrupcao(uint gpio, uint32_t events) {
-    printf("BUTAO A PRESSIONADO\n\n");
-}
+void botao_a_interrupcao(uint gpio, uint32_t events);
 
 void botao_b_interrupcao(uint gpio, uint32_t events) {
     printf("BUTAO B PRESSIONADO\n\n");
@@ -47,7 +49,7 @@ int main()
 
     //testa_led_por_index();
 
-    uint16_t notes[] = {262, 294, 330, 349, 440, 494, 523};
+    
 
     // Frequências em Hz (valores arredondados)
     const uint16_t frequencies[] = {
@@ -79,10 +81,9 @@ int main()
 
     while (true) {
         /*
-        for(int i = 0; i < 27; i++)
-        {
-            buzzer_set_frequency(&buzzer, frequencies[i]);
-            sleep_ms(durations[i]);
+        for(int i = 0; i < 8; i++) {
+            buzzer_set_frequency(&buzzer, notes[i]);
+            sleep_ms(400);
         }*/
 
         joystick_captura();
@@ -114,7 +115,32 @@ int main()
         
             case NEUTRO: display_sprite(neutro); break;
         }
-        
+        switch (notas){
+            case DO: buzzer_set_frequency(&buzzer, notes[0]); sleep_ms(400); buzzer_set_frequency(&buzzer, 0); notas = MUTE; break; // DO
+            case RE: buzzer_set_frequency(&buzzer, notes[1]); break; // RE
+            case MI: buzzer_set_frequency(&buzzer, notes[2]); break; // MI
+            case FA: buzzer_set_frequency(&buzzer, notes[3]); break; // FA
+            case SOL: buzzer_set_frequency(&buzzer, notes[4]); break; // SOL
+            case LA: buzzer_set_frequency(&buzzer, notes[5]); break; // LA
+            case SI: buzzer_set_frequency(&buzzer, notes[6]); break; // SI
+            case DO2: buzzer_set_frequency(&buzzer, notes[7]); break; // DO
+            case MUTE: buzzer_set_frequency(&buzzer, 0); break;   
+        }
+    }
+}
+
+
+void botao_a_interrupcao(uint gpio, uint32_t events) {
+    switch (get_direcao()) {
+        case CIMA2: notas = DO; break; // DO
+        case DIAG_CIMA_DIREITA2: notas = RE; break; // RE
+        case DIREITA2: notas = MI; break; // MI
+        case DIAG_BAIXO_DIREITA2: notas = FA; break; // FA
+        case BAIXO2: notas = SOL; break; // SOL
+        case DIAG_BAIXO_ESQUERDA2: notas = LA; break; // LA
+        case ESQUERDA2: notas = SI; break; // SI
+        case DIAG_CIMA_ESQUERDA2: notas = DO2; break; // DO
+        case NEUTRO: notas = MUTE; break;   
     }
 }
 
