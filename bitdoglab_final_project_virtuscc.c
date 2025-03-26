@@ -111,27 +111,88 @@ void botao_b_interrupcao(uint gpio, uint32_t events) {
 // Sequência de demonstração com animações e sons
 void demonstracao() {
     // Animação circular com mudança de cores e notas musicais
-    set_cor(255,0,0); // Vermelho
+    set_cor(255,0,0); // Cor
     display_sprite(cima1);
     matrix_write();
     sleep_ms(200);
     display_sprite(cima2);
     matrix_write();
-    buzzer_set_frequency(&buzzer, notes[0]); // Dó
+    buzzer_set_frequency(&buzzer, notes[0]); // Nota
     sleep_ms(400);
 
-    set_cor(0,255,0); // Verde
+    set_cor(0,255,0);
     display_sprite(dircim1);
     matrix_write();
     sleep_ms(200);
     display_sprite(dircim2);
     matrix_write();
-    buzzer_set_frequency(&buzzer, notes[1]); // Ré
+    buzzer_set_frequency(&buzzer, notes[1]);
     sleep_ms(400);
 
-    // Continuação das animações (padrão similar se repete)
-    // ... [restante da sequência] ...
+    set_cor(0,0,255);
+    display_sprite(dir1);
+    matrix_write();
+    sleep_ms(200);
+    display_sprite(dir2);
+    matrix_write();
+    buzzer_set_frequency(&buzzer, notes[2]);
+    sleep_ms(400);
 
-    set_cor(255, 255,0); // Amarelo
-    demo = 0; // Finaliza demonstração
+    set_cor(255,0,255);
+    display_sprite(dirbax1);
+    matrix_write();
+    sleep_ms(200);
+    display_sprite(dirbax2);
+    matrix_write();
+    buzzer_set_frequency(&buzzer, notes[3]);
+    sleep_ms(400);
+
+    set_cor(255, 255,0);
+    display_sprite(bai1);
+    matrix_write();
+    sleep_ms(200);
+    display_sprite(bai2);
+    matrix_write();
+    buzzer_set_frequency(&buzzer, notes[4]);
+    sleep_ms(400);
+
+    set_cor(0, 255, 255);
+    display_sprite(esqbax1);
+    matrix_write();
+    sleep_ms(200);
+    display_sprite(esqbax2);
+    matrix_write();
+    buzzer_set_frequency(&buzzer, notes[5]);
+    sleep_ms(400);
+
+
+    set_cor(150, 150, 0);
+    display_sprite(esq1);
+    matrix_write();
+    sleep_ms(200);
+    display_sprite(esq2);
+    matrix_write();
+    buzzer_set_frequency(&buzzer, notes[6]);
+    sleep_ms(400);
+
+    set_cor(0, 150, 150);
+    display_sprite(esqcim1);
+    matrix_write();
+    sleep_ms(200);
+    display_sprite(esqcim2);
+    matrix_write();
+    buzzer_set_frequency(&buzzer, notes[7]);
+    sleep_ms(400);
+
+    set_cor(255, 255, 255);
+    display_sprite(final1);
+    matrix_write();
+    sleep_ms(200);
+    display_sprite(final2);
+    matrix_write();
+    buzzer_set_frequency(&buzzer, notes[0]);
+    sleep_ms(400);
+
+    set_cor(255, 255,0);
+    demo = 0;
 }
