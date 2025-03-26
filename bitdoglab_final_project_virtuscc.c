@@ -6,82 +6,29 @@
 #include "joystick_lib.h"
 #include "direcoes.h"
 
-#define SLEEP_TEST 500
-
 #define BOTAO_A  5
 #define BOTAO_B  6
-#define LED 12
 
 Nota notas = MUTE;
 Buzzer buzzer;
 uint16_t notes[] = {262, 294, 330, 349, 392, 440, 494, 523};
 
-void testa_led_por_index();
-
 void botao_a_interrupcao(uint gpio, uint32_t events);
-
 void botao_b_interrupcao(uint gpio, uint32_t events);
 
 int main()
 {
     stdio_init_all();
-
     init(INPUT_PIN);
-
     init_joystick();
     buzzer_init(&buzzer, 21, 1000);
-    
     button_init(BOTAO_A, PULLUP);
     button_init(BOTAO_B, PULLUP);
-    gpio_init(LED);
-    gpio_set_dir(LED, GPIO_OUT);
-    gpio_put(LED, 0);
 
     button_register_callback(BOTAO_A, BUTTON_A, GPIO_IRQ_EDGE_FALL, &botao_a_interrupcao); 
-    button_register_callback(BOTAO_B, BUTTON_B, GPIO_IRQ_EDGE_FALL, &botao_b_interrupcao); 
-
-    printf("Emitindo beep...\n");
-    //buzzer_beep(&buzzer, 500, 500);
-
-    //testa_led_por_index();
-
-    
-
-    // Frequências em Hz (valores arredondados)
-    const uint16_t frequencies[] = {
-        392, 392, 392,   // "We wish you"
-        330, 523, 494,    // "a merry Christ-"
-        440, 392,         // "-mas"
-        392, 392, 392,    // "We wish you"
-        330, 523, 494,    // "a merry Christ-"
-        440, 392,         // "-mas"
-        392, 392, 440,    // "We wish you"
-        349, 330, 294,    // "a merry"
-        523, 523, 494,    // "Christ-mas"
-        440, 392          // "and a happy new year!"
-    };
-
-    // Durações em milissegundos (ms)
-    const uint16_t durations[] = {
-        400, 400, 400,    // "We wish you"
-        800, 400, 400,    // "a merry Christ-"
-        800, 800,         // "-mas"
-        400, 400, 400,    // "We wish you"
-        800, 400, 400,    // "a merry Christ-"
-        800, 800,         // "-mas"
-        400, 400, 400,    // "We wish you"
-        800, 800, 800,    // "a merry"
-        1200, 400, 400,   // "Christ-mas"
-        800, 1000         // "and a happy new year!"
-    };
+    button_register_callback(BOTAO_B, BUTTON_B, GPIO_IRQ_EDGE_FALL, &botao_b_interrupcao);    
 
     while (true) {
-        /*
-        for(int i = 0; i < 8; i++) {
-            buzzer_set_frequency(&buzzer, notes[i]);
-            sleep_ms(400);
-        }*/
-
         joystick_captura();
         normalizar_joystick();
         clear();
@@ -128,7 +75,7 @@ int main()
 
 
 void botao_a_interrupcao(uint gpio, uint32_t events) {
-    
+    printf("AMANHA!!!!!!!!!!!!!!!!!\n\n");
 }
 
 void botao_b_interrupcao(uint gpio, uint32_t events) {
@@ -141,40 +88,6 @@ void botao_b_interrupcao(uint gpio, uint32_t events) {
         case DIAG_BAIXO_ESQUERDA2: notas = LA; break; // LA
         case ESQUERDA2: notas = SI; break; // SI
         case DIAG_CIMA_ESQUERDA2: notas = DO2; break; // DO2
-        case NEUTRO: notas = MUTE; break;   
+        case NEUTRO: notas = MUTE; break;
     }
-}
-
-void testa_led_por_index() {
-    // acende tudo vermelho
-    for (uint8_t i = 0; i < LED_COUNT; i++){
-        set_color_by_index(i, 255, 0, 0);
-    }
-    matrix_write();
-    sleep_ms(SLEEP_TEST);
-    clear();
-
-    // acende tudo verde
-    for (uint8_t i = 0; i < LED_COUNT; i++){
-        set_color_by_index(i, 0, 255, 0);
-    }
-    matrix_write();
-    sleep_ms(SLEEP_TEST);
-    clear();
-
-    // acende tudo azul
-    for (uint8_t i = 0; i < LED_COUNT; i++){
-        set_color_by_index(i, 0, 0, 255);
-    }
-    matrix_write();
-    sleep_ms(SLEEP_TEST);
-    clear();
-
-    // acende tudo branco
-    for (uint8_t i = 0; i < LED_COUNT; i++){
-        set_color_by_index(i, 255, 255, 255);
-    }
-    matrix_write();
-    sleep_ms(SLEEP_TEST);
-    clear();
 }
