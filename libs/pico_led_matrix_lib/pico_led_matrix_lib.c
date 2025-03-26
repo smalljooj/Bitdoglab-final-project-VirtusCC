@@ -113,3 +113,9 @@ void display_sprite(const int sprite[5][5][3]) {
     }
     matrix_write();
 }
+
+void set_cor(uint8_t r, uint8_t g, uint8_t b){
+    tema_cor[0] = r;   // R
+    tema_cor[1] = g; // G
+    tema_cor[2] = b;   // B
+}

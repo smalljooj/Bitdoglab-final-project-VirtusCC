@@ -195,3 +195,22 @@ Direcao get_direcao() {
     {{0}, {0}, {0}, {100}, {0}}, // LED inferior direito
     {{0}, {0}, {0}, {0}, {100}}  // LED inferior direito
   };
+
+
+  // Sprite diagonal direita-baixo nível 2
+  int final1[5][5][3] = {
+    {{000}, {000}, {000}, {000}, {000}},
+    {{000}, {100}, {100}, {100}, {000}},
+    {{000}, {100}, {100}, {100}, {000}}, // Centro
+    {{000}, {100}, {100}, {100}, {000}}, // LED inferior direito
+    {{000}, {000}, {000}, {000}, {000}}  // LED inferior direito
+  };
+
+  // Sprite diagonal direita-baixo nível 2
+  int final2[5][5][3] = {
+    {{100}, {000}, {100}, {000}, {100}},
+    {{000}, {100}, {100}, {100}, {000}},
+    {{100}, {100}, {100}, {100}, {100}}, // Centro
+    {{000}, {100}, {100}, {100}, {000}}, // LED inferior direito
+    {{100}, {000}, {100}, {000}, {100}}  // LED inferior direito
+  };

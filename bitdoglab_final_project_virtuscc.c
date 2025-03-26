@@ -11,10 +11,12 @@
 
 Nota notas = MUTE;
 Buzzer buzzer;
+uint8_t demo = 0;
 uint16_t notes[] = {262, 294, 330, 349, 392, 440, 494, 523};
 
 void botao_a_interrupcao(uint gpio, uint32_t events);
 void botao_b_interrupcao(uint gpio, uint32_t events);
+void demonstracao();
 
 int main()
 {
@@ -35,6 +37,10 @@ int main()
         matrix_write(); // Escreve os dados nos LEDs.
         sleep_ms(1);
         
+        if (demo == 1){
+            demonstracao();
+        }
+
         switch (get_direcao()) {
             // Direções principais
             case CIMA1: display_sprite(cima1); break;
@@ -75,7 +81,7 @@ int main()
 
 
 void botao_a_interrupcao(uint gpio, uint32_t events) {
-    printf("AMANHA!!!!!!!!!!!!!!!!!\n\n");
+    demo = 1;
 }
 
 void botao_b_interrupcao(uint gpio, uint32_t events) {
@@ -90,4 +96,91 @@ void botao_b_interrupcao(uint gpio, uint32_t events) {
         case DIAG_CIMA_ESQUERDA2: notas = DO2; break; // DO2
         case NEUTRO: notas = MUTE; break;
     }
+}
+
+void demonstracao(){
+    set_cor(255,0,0);
+            display_sprite(cima1);
+            matrix_write();
+            sleep_ms(200);
+            display_sprite(cima2);
+            matrix_write();
+            buzzer_set_frequency(&buzzer, notes[0]);
+            sleep_ms(400);
+
+            set_cor(0,255,0);
+            display_sprite(dircim1);
+            matrix_write();
+            sleep_ms(200);
+            display_sprite(dircim2);
+            matrix_write();
+            buzzer_set_frequency(&buzzer, notes[1]);
+            sleep_ms(400);
+
+            set_cor(0,0,255);
+            display_sprite(dir1);
+            matrix_write();
+            sleep_ms(200);
+            display_sprite(dir2);
+            matrix_write();
+            buzzer_set_frequency(&buzzer, notes[2]);
+            sleep_ms(400);
+
+            set_cor(255,0,255);
+            display_sprite(dirbax1);
+            matrix_write();
+            sleep_ms(200);
+            display_sprite(dirbax2);
+            matrix_write();
+            buzzer_set_frequency(&buzzer, notes[3]);
+            sleep_ms(400);
+
+            set_cor(255, 255,0);
+            display_sprite(bai1);
+            matrix_write();
+            sleep_ms(200);
+            display_sprite(bai2);
+            matrix_write();
+            buzzer_set_frequency(&buzzer, notes[4]);
+            sleep_ms(400);
+
+            set_cor(0, 255, 255);
+            display_sprite(esqbax1);
+            matrix_write();
+            sleep_ms(200);
+            display_sprite(esqbax2);
+            matrix_write();
+            buzzer_set_frequency(&buzzer, notes[5]);
+            sleep_ms(400);
+
+
+            set_cor(150, 150, 0);
+            display_sprite(esq1);
+            matrix_write();
+            sleep_ms(200);
+            display_sprite(esq2);
+            matrix_write();
+            buzzer_set_frequency(&buzzer, notes[6]);
+            sleep_ms(400);
+
+            set_cor(0, 150, 150);
+            display_sprite(esqcim1);
+            matrix_write();
+            sleep_ms(200);
+            display_sprite(esqcim2);
+            matrix_write();
+            buzzer_set_frequency(&buzzer, notes[7]);
+            sleep_ms(400);
+
+            set_cor(255, 255, 255);
+            display_sprite(final1);
+            matrix_write();
+            sleep_ms(200);
+            display_sprite(final2);
+            matrix_write();
+            buzzer_set_frequency(&buzzer, notes[0]);
+            sleep_ms(400);
+
+            set_cor(255, 255,0);
+            demo = 0;
 }

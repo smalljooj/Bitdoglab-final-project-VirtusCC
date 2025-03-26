@@ -74,4 +74,6 @@ void display_sprite(const int sprite[5][5][3]);
 
 void set_led_state(uint8_t index, uint8_t intensidade);
 
+void set_cor(uint8_t r, uint8_t g, uint8_t b);
+
 #endif

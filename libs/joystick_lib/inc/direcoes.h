@@ -62,6 +62,8 @@ extern int dircim1[5][5][3];
 extern int dircim2[5][5][3];
 extern int dirbax1[5][5][3];
 extern int dirbax2[5][5][3];
+extern int final1[5][5][3];
+extern int final2[5][5][3];
 
 
 
