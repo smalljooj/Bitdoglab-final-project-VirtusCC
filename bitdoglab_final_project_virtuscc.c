@@ -20,9 +20,7 @@ void testa_led_por_index();
 
 void botao_a_interrupcao(uint gpio, uint32_t events);
 
-void botao_b_interrupcao(uint gpio, uint32_t events) {
-    printf("BUTAO B PRESSIONADO\n\n");
-}
+void botao_b_interrupcao(uint gpio, uint32_t events);
 
 int main()
 {
@@ -116,14 +114,62 @@ int main()
             case NEUTRO: display_sprite(neutro); break;
         }
         switch (notas){
-            case DO: buzzer_set_frequency(&buzzer, notes[0]); sleep_ms(400); buzzer_set_frequency(&buzzer, 0); notas = MUTE; break; // DO
-            case RE: buzzer_set_frequency(&buzzer, notes[1]); break; // RE
-            case MI: buzzer_set_frequency(&buzzer, notes[2]); break; // MI
-            case FA: buzzer_set_frequency(&buzzer, notes[3]); break; // FA
-            case SOL: buzzer_set_frequency(&buzzer, notes[4]); break; // SOL
-            case LA: buzzer_set_frequency(&buzzer, notes[5]); break; // LA
-            case SI: buzzer_set_frequency(&buzzer, notes[6]); break; // SI
-            case DO2: buzzer_set_frequency(&buzzer, notes[7]); break; // DO
+            case DO: 
+                buzzer_set_frequency(&buzzer, notes[0]);
+                sleep_ms(400);
+                buzzer_set_frequency(&buzzer, 0);
+                notas = MUTE;
+                break;
+
+            case RE:
+                buzzer_set_frequency(&buzzer, notes[1]); // RE
+                sleep_ms(400);
+                buzzer_set_frequency(&buzzer, 0);
+                notas = MUTE;
+                break;
+
+            case MI:
+                buzzer_set_frequency(&buzzer, notes[2]); // MI
+                sleep_ms(400);
+                buzzer_set_frequency(&buzzer, 0);
+                notas = MUTE;
+                break;
+
+            case FA:
+                buzzer_set_frequency(&buzzer, notes[3]); // FA
+                sleep_ms(400);
+                buzzer_set_frequency(&buzzer, 0);
+                notas = MUTE;
+                break;
+
+            case SOL:
+                buzzer_set_frequency(&buzzer, notes[4]); // SOL
+                sleep_ms(400);
+                buzzer_set_frequency(&buzzer, 0);
+                notas = MUTE;
+                break;
+
+            case LA:
+                buzzer_set_frequency(&buzzer, notes[5]); // LA
+                sleep_ms(400);
+                buzzer_set_frequency(&buzzer, 0);
+                notas = MUTE;
+                break;
+
+            case SI: 
+                buzzer_set_frequency(&buzzer, notes[6]); // SI
+                sleep_ms(400);
+                buzzer_set_frequency(&buzzer, 0);
+                notas = MUTE;
+                break;
+
+            case DO2:
+                buzzer_set_frequency(&buzzer, notes[7]); // DO
+                sleep_ms(400);
+                buzzer_set_frequency(&buzzer, 0);
+                notas = MUTE;
+                break;
+
             case MUTE: buzzer_set_frequency(&buzzer, 0); break;   
         }
     }
@@ -131,6 +177,10 @@ int main()
 
 
 void botao_a_interrupcao(uint gpio, uint32_t events) {
+    
+}
+
+void botao_b_interrupcao(uint gpio, uint32_t events) {
     switch (get_direcao()) {
         case CIMA2: notas = DO; break; // DO
         case DIAG_CIMA_DIREITA2: notas = RE; break; // RE
