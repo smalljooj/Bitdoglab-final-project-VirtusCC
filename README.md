@@ -190,7 +190,11 @@ A biblioteca `pico_button_lib` gerencia a inicialização, configuração dos bo
    - Fale ou coloque um som próximo ao microfone.
 
 ---
+## Demonstração
 
+![Demonstração](/images/gif_projeto.gif)
+![Funcionalidade](/images/func_som.gif)
+---
 ## Considerações finais
 
 Não foi possível criar o projeto apenas com o código disponibilizado devido a erros, falta de implementações e ajustes necessários para melhorar o funcionamento das bibliotecas. A seguir, são detalhados os principais pontos observados:
@@ -221,6 +225,8 @@ Os parâmetros dessa função são:
 
 ### Matriz de Led
 
+A biblioteca da matriz LED já funcionava corretamente em sua versão original, sem apresentar erros ou instabilidades. No entanto, para atender plenamente às necessidades do nosso projeto, implementamos duas funcionalidades essenciais: a função display_sprite(), que permite carregar e exibir sprites personalizados na matriz através de um array tridimensional que define a posição e cor de cada LED, e a função set_cor(), que simplifica o controle visual ao permitir a mudança simultânea de cor para toda a matriz com um único comando. Essas melhorias trouxeram maior flexibilidade para criar animações e feedbacks visuais dinâmicos.
+
 ### Buzzer
 
 Houve falhas na funcionalidade de tocar melodias, o que levou à necessidade de implementar um novo método próprio para essa função. Além disso, foi 
@@ -236,3 +242,4 @@ Outro problema encontrado foi no controle de volume, que apenas funcionava corre
 - [Biblioteca do Buzzer](https://github.com/pedrodev3005/pico-buzzer-lib)
 - [Biblioteca da Matriz de Led](https://github.com/Chico0212/pico-led-matrix-lib/tree/main)
 - [Biblioteca dos Botões](https://github.com/pedrodev3005/pico-button-lib)
+- [Biblioteca do Joystick](https://github.com/AntonioJunior2222/BitDogLab-Joystick-Matriz_Led-VIRTUS_CC)
