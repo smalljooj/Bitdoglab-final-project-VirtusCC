@@ -111,17 +111,64 @@ int main()
         
             case NEUTRO: display_sprite(neutro); break;
         }
-
         switch (notas){
-            case DO: buzzer_set_frequency(&buzzer, notes[0]); break; // DO
-            case RE: buzzer_set_frequency(&buzzer, notes[1]); break; // RE
-            case MI: buzzer_set_frequency(&buzzer, notes[2]); break; // MI
-            case FA: buzzer_set_frequency(&buzzer, notes[3]); break; // FA
-            case SOL: buzzer_set_frequency(&buzzer, notes[4]); break; // SOL
-            case LA: buzzer_set_frequency(&buzzer, notes[5]); break; // LA
-            case SI: buzzer_set_frequency(&buzzer, notes[6]); break; // SI
-            case DO2: buzzer_set_frequency(&buzzer, notes[7]); break; // DO2
-            case MUTE: buzzer_set_volume(&buzzer, 0); break;   
+            case DO: 
+                buzzer_set_frequency(&buzzer, notes[0]);
+                sleep_ms(400);
+                buzzer_set_frequency(&buzzer, 0);
+                notas = MUTE;
+                break;
+
+            case RE:
+                buzzer_set_frequency(&buzzer, notes[1]); // RE
+                sleep_ms(400);
+                buzzer_set_frequency(&buzzer, 0);
+                notas = MUTE;
+                break;
+
+            case MI:
+                buzzer_set_frequency(&buzzer, notes[2]); // MI
+                sleep_ms(400);
+                buzzer_set_frequency(&buzzer, 0);
+                notas = MUTE;
+                break;
+
+            case FA:
+                buzzer_set_frequency(&buzzer, notes[3]); // FA
+                sleep_ms(400);
+                buzzer_set_frequency(&buzzer, 0);
+                notas = MUTE;
+                break;
+
+            case SOL:
+                buzzer_set_frequency(&buzzer, notes[4]); // SOL
+                sleep_ms(400);
+                buzzer_set_frequency(&buzzer, 0);
+                notas = MUTE;
+                break;
+
+            case LA:
+                buzzer_set_frequency(&buzzer, notes[5]); // LA
+                sleep_ms(400);
+                buzzer_set_frequency(&buzzer, 0);
+                notas = MUTE;
+                break;
+
+            case SI: 
+                buzzer_set_frequency(&buzzer, notes[6]); // SI
+                sleep_ms(400);
+                buzzer_set_frequency(&buzzer, 0);
+                notas = MUTE;
+                break;
+
+            case DO2:
+                buzzer_set_frequency(&buzzer, notes[7]); // DO
+                sleep_ms(400);
+                buzzer_set_frequency(&buzzer, 0);
+                notas = MUTE;
+                break;
+
+            case MUTE: buzzer_set_frequency(&buzzer, 0); break;   
         }
     }
 }
@@ -140,7 +187,7 @@ void botao_b_interrupcao(uint gpio, uint32_t events) {
         case BAIXO2: notas = SOL; break; // SOL
         case DIAG_BAIXO_ESQUERDA2: notas = LA; break; // LA
         case ESQUERDA2: notas = SI; break; // SI
-        case DIAG_CIMA_ESQUERDA2: notas = DO2; break; // DO2
+        case DIAG_CIMA_ESQUERDA2: notas = DO2; break; // DO
         case NEUTRO: notas = MUTE; break;   
     }
 }

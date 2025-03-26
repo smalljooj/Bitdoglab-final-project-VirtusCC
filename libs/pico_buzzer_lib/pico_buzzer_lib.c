@@ -50,13 +50,11 @@ void buzzer_init(Buzzer *buzzer, uint pin, uint freq) {
 void buzzer_set_frequency(Buzzer *buzzer, uint frequency) {
     uint slice_num = pwm_gpio_to_slice_num(buzzer->pin);
     /*
-    pwm_set_clkdiv(slice_num, clock_get_hz(clk_sys) / (frequency * 4096));
+    
     buzzer->frequency = frequency;
     */
 
-    pwm_config config = pwm_get_default_config();
-    pwm_config_set_clkdiv(&config, clock_get_hz(clk_sys) / (frequency * 4096)); // Divisor de clock
-    pwm_init(slice_num, &config, true);
+    pwm_set_clkdiv(slice_num, clock_get_hz(clk_sys) / (frequency * 4096));
     pwm_set_wrap(slice_num, 4095);
 
     pwm_set_gpio_level(buzzer->pin, 2048); 
